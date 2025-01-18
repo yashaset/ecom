@@ -21,11 +21,16 @@ export default async function Home() {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Welcome to My E-Commerce Store</h1>
+      <h1 className={styles.title}>Black Firday Sale! ⚡️</h1>
       <div className={styles.productGrid}>
         {products.map((product) => (
           <div key={product.id} className={styles.productCard}>
-            <Link href={`/product/${product.id}`}>
+            <Link
+              href={`/product/${product.id}`}
+              style={{
+                textDecoration: "none",
+              }}
+            >
               <img
                 src={product.image}
                 alt={product.title}

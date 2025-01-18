@@ -29,7 +29,7 @@ export default function RootLayout({
             <header className={styles.header}>
               <nav className={styles.navbar}>
                 <Link href="/" className={styles.logo}>
-                  My Store
+                  PUNK
                 </Link>
                 <div className={styles.navItems}>
                   <Link href="/cart" className={styles.logo}>
