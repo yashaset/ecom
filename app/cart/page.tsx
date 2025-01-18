@@ -1,38 +1,39 @@
 "use client";
+import React from "react";
+import styles from "./Cart.module.css";
 
-import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useCart } from "../context/CartContext";
 
-type Product = {
-  id: string;
-  name: string;
-  price: number;
-};
-
-export default function CartPage() {
-  const [cart, setCart] = useState<Product[]>([]);
-  const router = useRouter();
-
-  useEffect(() => {
-    const savedCart = JSON.parse(localStorage.getItem("cart") || "[]");
-    setCart(savedCart);
-  }, []);
-
-  const handleCheckout = () => {
-    router.push("/checkout");
-  };
+const CartPage: React.FC = () => {
+  const { cart, removeFromCart } = useCart();
 
   return (
-    <div>
-      <h1>Your Cart</h1>
-      <ul>
-        {cart.map((item, index) => (
-          <li key={index}>
-            {item.name} - ${item.price}
-          </li>
-        ))}
-      </ul>
-      <button onClick={handleCheckout}>Proceed to Checkout</button>
+    <div className={styles.container}>
+      <h1 className={styles.title}>Your Cart</h1>
+      {cart.length === 0 ? (
+        <p>Your cart is empty!</p>
+      ) : (
+        <ul className={styles.cartList}>
+          {cart.map((item) => (
+            <li key={item.id} className={styles.cartItem}>
+              <img src={item.image} alt={item.title} className={styles.image} />
+              <div>
+                <h2>{item.title}</h2>
+                <p>Price: ${item.price}</p>
+                <p>Quantity: {item.quantity}</p>
+                <button
+                  onClick={() => removeFromCart(item.id)}
+                  className={styles.removeButton}
+                >
+                  Remove
+                </button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
-}
+};
+
+export default CartPage;

@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
 import "./globals.css";
+import styles from "./layout.module.css";
+import Link from "next/link";
+import CartIcon from "./Components/CartIcon";
+import { CartProvider } from "./context/CartContext";
 
 const geistSans = Nunito({
   variable: "--font-nunito-sans",
@@ -19,7 +23,25 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable}`}>{children}</body>
+      <body className={`${geistSans.variable}`}>
+        <CartProvider>
+          <div>
+            <header className={styles.header}>
+              <nav className={styles.navbar}>
+                <Link href="/" className={styles.logo}>
+                  My Store
+                </Link>
+                <div className={styles.navItems}>
+                  <Link href="/cart" className={styles.logo}>
+                    <CartIcon />
+                  </Link>
+                </div>
+              </nav>
+            </header>
+            <main>{children}</main>
+          </div>
+        </CartProvider>
+      </body>
     </html>
   );
 }
